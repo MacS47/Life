@@ -58,6 +58,7 @@ def set_m_position_pixel(map_position):
 
 # Antibody movement
 def antibody_movement(antibody_rect):
+    
     if (player_rect.x > antibody_rect.x):
         antibody_rect.x = antibody_rect.x + 1
     if (player_rect.y > antibody_rect.y):
@@ -66,6 +67,7 @@ def antibody_movement(antibody_rect):
         antibody_rect.x = antibody_rect.x - 1
     if (player_rect.y < antibody_rect.y):
         antibody_rect.y = antibody_rect.y - 1
+
 
 # Antibody mechanics
 def antibody_ia(antibody_rect,ia_increment):
@@ -77,8 +79,21 @@ def antibody_ia(antibody_rect,ia_increment):
     if distance < ia_increment:
          antibody_movement(antibody_rect)
 
+def antibody_animation():
+
+    global antibody, antibody_index, antibody_sprites
+    
+    antibody_index += 0.1
+
+    if antibody_index < len(antibody_sprites):
+        antibody = antibody_sprites[int(antibody_index)]
+    else:
+        antibody_index = 0
+
 # Cell movement
 def cell_movement(cell_rect,dot_rect):
+    
+    global cell, cell_index, cell_sprites
     speed_cell = speed
 
     if (dot_rect.x != cell_rect.x) and (dot_rect.y != cell_rect.y):
@@ -92,6 +107,13 @@ def cell_movement(cell_rect,dot_rect):
         cell_rect.x = cell_rect.x - speed_cell
     if (dot_rect.y < cell_rect.y):
         cell_rect.y = cell_rect.y - speed_cell
+
+    cell_index += 0.1
+
+    if cell_index < len(cell_sprites):
+        cell = cell_sprites[int(cell_index)]
+    else:
+        cell_index = 0
 
 # Show info
 def display_info():
@@ -116,6 +138,18 @@ def display_info():
     screen.blit(player_score_text,player_score_rect)
     screen.blit(player_level_text,player_level_rect)
 
+
+def player_animation():
+    global player, player_index, player_sprites
+    
+    player_index += 0.1
+
+    if player_index < len(player_sprites):
+        player = player_sprites[int(player_index)]
+    else:
+        player_index = 0
+
+
 # Initializing the screen
 pygame.init()
 
@@ -138,13 +172,24 @@ font_game_over = pygame.font.Font('font/joystix monospace.ttf',24)
 # ----------------------------------------------
 
 # Player | Virus
-player = pygame.image.load('images/Virus.png').convert_alpha()
+player_1 = pygame.image.load('images/Virus_1.png').convert_alpha()
+player_2 = pygame.image.load('images/Virus_2.png').convert_alpha()
+player_sprites = [player_1,player_2]
+player_index = 1
+player = player_sprites[player_index]
 player_pos = random_pos()
 player_rect = player.get_rect(center = player_pos)
 player_path = [[0,0],[0,0]]
 
 # antibody | Enemy
-antibody = pygame.image.load('images/Antibody.png').convert_alpha()
+antibody_1 = pygame.image.load('images/Antibody_1.png').convert_alpha()
+antibody_2 = pygame.image.load('images/Antibody_2.png').convert_alpha()
+antibody_3 = pygame.image.load('images/Antibody_3.png').convert_alpha()
+antibody_sprites = [antibody_1,antibody_2,antibody_3]
+antibody_index = 0
+
+antibody = antibody_sprites[antibody_index]
+
 antibody_pos = random_pos()
 antibody_rect = antibody.get_rect(center = antibody_pos)
 
@@ -169,8 +214,13 @@ background = pygame.image.load('images/Background.png').convert_alpha()
 background_pos = (0,0)
 background_rect = background.get_rect(topleft = background_pos)
 
+cell_1 = pygame.image.load('images/Cell_1.png').convert_alpha()
+cell_2 = pygame.image.load('images/Cell_2.png').convert_alpha()
+cell_sprites = [cell_1,cell_2]
+cell_index = 0
 
-cell = pygame.image.load('images/Cell.png').convert_alpha()
+cell = cell_sprites[cell_index]
+
 cell_pos = random_pos()
 cell_rect = cell.get_rect(center = cell_pos)
 
@@ -269,6 +319,9 @@ while True:
             aux = random.randint(0,3)
             free_path = map_loc[aux]
 
+        player_animation()
+        antibody_animation()
+        
         # Render Player, Cell and antibody
         screen.blit(player, player_rect)
         screen.blit(cell, cell_rect)
@@ -286,6 +339,7 @@ while True:
             level += 1
             count_score = 0
             ia_increment += 10
+            life += 1
             display_info()        
 
         # Collider Cell to Player
