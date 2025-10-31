@@ -20,9 +20,33 @@ A construção desse jogo só foi possível graças ao canal do YouTube, **[Clea
 
 ## Como começar
 
+### Instalação
+
+1. Clone o repositório
+2. Instale as dependências:
+```bash
+pip install -r requirements.txt
+```
+
+### Executar o Jogo
+
 Basta executar o arquivo **main.py** e jogar
 
+```bash
+python main.py
+```
+
 ![Imagem Tela Introdução](screenshots/001.png 'Tela Introdução')
+
+## Melhorias Recentes
+
+O código foi recentemente revisado e melhorado. Veja o arquivo [IMPROVEMENTS.md](IMPROVEMENTS.md) para detalhes completos sobre:
+
+- ✅ Refatoração de código duplicado
+- ✅ Melhoria na organização e estrutura
+- ✅ Adição de docstrings e documentação
+- ✅ Seguimento de padrões Python (PEP 8)
+- ✅ Score pylint aumentado de 6.22/10 para 8.41/10
 
 ## Personagens
 
