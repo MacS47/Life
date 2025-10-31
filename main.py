@@ -15,7 +15,6 @@ SCREEN_PLAYABLE_HEIGHT = 480
 SPEED = 3
 SPEED_PLAYER = 3.1
 DIAGONAL_FACTOR = 0.7071217222732374245  # 1/sqrt(2) for diagonal movement
-ONETIME = 0  # Unused variable kept for compatibility
 
 # Game state variables
 life = 10
@@ -100,7 +99,7 @@ def antibody_ia(antibody_rect, ai_increment):
 
 def antibody_animation():
     """Animate antibody sprite."""
-    global antibody, antibody_index
+    global antibody, antibody_index, antibody_sprites
 
     antibody_index += 0.1
 
@@ -113,7 +112,7 @@ def antibody_animation():
 # Cell movement
 def cell_movement(cell_rect, dot_rect):
     """Move cell towards the dot with diagonal speed compensation."""
-    global cell, cell_index
+    global cell, cell_index, cell_sprites
 
     speed_cell = SPEED
 
@@ -165,7 +164,7 @@ def display_info():
 
 def player_animation():
     """Animate player sprite."""
-    global player, player_index
+    global player, player_index, player_sprites
 
     player_index += 0.1
 
